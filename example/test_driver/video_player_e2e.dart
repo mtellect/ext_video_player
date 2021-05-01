@@ -12,7 +12,7 @@ const Duration _playDuration = Duration(seconds: 1);
 void main() {
   E2EWidgetsFlutterBinding.ensureInitialized();
   VideoPlayerController _controller;
-  tearDown(() async => _controller.dispose());
+  //tearDown(() async => _controller.dispose());
 
   group('asset videos', () {
     setUp(() {

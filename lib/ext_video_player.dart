@@ -271,11 +271,13 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
         String _videoId = _getIdFromUrl(dataSource);
         String _fetchUrl = "";
         if (kIsWeb) {
-          _fetchUrl = "https://youtubevideodownloadurls.netlify.app/.netlify/functions/server?vid=$_videoId";
+          _fetchUrl =
+              "https://youtubevideodownloadurls.netlify.app/.netlify/functions/server?vid=$_videoId";
         } else {
-          _fetchUrl = "https://www.youtube.com/get_video_info?&video_id=$_videoId";
+          _fetchUrl =
+              "https://www.youtube.com/get_video_info?&video_id=$_videoId";
         }
-        var response = await http.get(_fetchUrl);
+        var response = await http.get(Uri.parse(_fetchUrl));
 
         Uri uri = Uri.parse('http://google.com?' + response.body);
         var jsonRes = jsonDecode(uri.queryParameters['player_response']);
@@ -288,13 +290,17 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
         String newUrl = videoUrls[quality.toString().split('.').last];
 
         if (newUrl == null) {
-          for (int i = quality.index + 1; i < VideoYoutubeQuality.values.length; i++) {
-            newUrl = videoUrls[VideoYoutubeQuality.values[i].toString().split('.').last];
+          for (int i = quality.index + 1;
+              i < VideoYoutubeQuality.values.length;
+              i++) {
+            newUrl = videoUrls[
+                VideoYoutubeQuality.values[i].toString().split('.').last];
           }
         }
         if (newUrl == null) {
           for (int i = quality.index - 1; i >= 0; i--) {
-            newUrl = videoUrls[VideoYoutubeQuality.values[i].toString().split('.').last];
+            newUrl = videoUrls[
+                VideoYoutubeQuality.values[i].toString().split('.').last];
           }
         }
         if (newUrl != null) finalYoutubeUrl = newUrl;
@@ -393,8 +399,10 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
   /// To Get VideoId from Url
   static String _getIdFromUrl(String url, [bool trimWhitespaces = true]) {
     List<RegExp> _regexps = [
-      RegExp(r'^https:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([_\-a-zA-Z0-9]{11}).*$'),
-      RegExp(r'^https:\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11}).*$'),
+      RegExp(
+          r'^https:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([_\-a-zA-Z0-9]{11}).*$'),
+      RegExp(
+          r'^https:\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11}).*$'),
       RegExp(r'^https:\/\/youtu\.be\/([_\-a-zA-Z0-9]{11}).*$')
     ];
 
